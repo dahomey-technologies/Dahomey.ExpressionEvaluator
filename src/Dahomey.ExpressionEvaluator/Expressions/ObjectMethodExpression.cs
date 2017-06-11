@@ -6,7 +6,7 @@
 
 #endregion
 
- using Dahomey.ExpressionEvaluator.Expressions;
+using Dahomey.ExpressionEvaluator.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Reflection;

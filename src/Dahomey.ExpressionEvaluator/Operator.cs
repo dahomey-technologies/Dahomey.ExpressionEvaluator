@@ -38,7 +38,7 @@ namespace Dahomey.ExpressionEvaluator
     {
         public static string PrettyPrint(this Operator op)
         {
-            switch(op)
+            switch (op)
             {
                 case Operator.Mult:
                     return "*";

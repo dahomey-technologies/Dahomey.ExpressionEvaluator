@@ -6,7 +6,7 @@
 
 #endregion
 
- using System;
+using System;
 using System.Globalization;
 using System.Text;
 
@@ -233,7 +233,7 @@ namespace Dahomey.ExpressionEvaluator
 
             currentToken = sb.ToString();
 
-            switch(currentToken)
+            switch (currentToken)
             {
                 case "true":
                     currentTokenType = TokenType.True;

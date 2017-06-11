@@ -6,7 +6,7 @@
 
 #endregion
 
- using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -27,7 +27,7 @@ namespace Dahomey.ExpressionEvaluator
 
                 case Operator.LessThanOrEqual:
                     return LeftExpr.Evaluate(variables) <= RightExpr.Evaluate(variables);
-                    
+
                 case Operator.Equal:
                     return Math.Abs(LeftExpr.Evaluate(variables) - RightExpr.Evaluate(variables)) < double.Epsilon;
 

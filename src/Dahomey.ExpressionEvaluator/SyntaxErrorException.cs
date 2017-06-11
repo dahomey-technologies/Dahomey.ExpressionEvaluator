@@ -6,7 +6,7 @@
 
 #endregion
 
- using System;
+using System;
 
 namespace Dahomey.ExpressionEvaluator
 {

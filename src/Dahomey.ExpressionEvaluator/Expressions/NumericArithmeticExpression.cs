@@ -6,7 +6,7 @@
 
 #endregion
 
- using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -29,7 +29,7 @@ namespace Dahomey.ExpressionEvaluator
 
                 case Operator.Minus:
                     return RightExpr == null ?
-                        -LeftExpr.Evaluate(variables) : 
+                        -LeftExpr.Evaluate(variables) :
                         LeftExpr.Evaluate(variables) - RightExpr.Evaluate(variables);
 
                 case Operator.Mult:

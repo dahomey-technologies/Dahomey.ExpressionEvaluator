@@ -6,7 +6,7 @@
 
 #endregion
 
- namespace Dahomey.ExpressionEvaluator
+namespace Dahomey.ExpressionEvaluator
 {
     public interface IExpression
     {

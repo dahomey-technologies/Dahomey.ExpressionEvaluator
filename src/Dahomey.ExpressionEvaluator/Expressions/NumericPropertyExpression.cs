@@ -1,4 +1,12 @@
-﻿using System;
+﻿#region License
+
+/* Copyright © 2017, Dahomey Technologies and Contributors
+ * For conditions of distribution and use, see copyright notice in license.txt file
+ */
+
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;

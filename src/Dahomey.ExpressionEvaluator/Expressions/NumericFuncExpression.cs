@@ -6,7 +6,7 @@
 
 #endregion
 
- using Dahomey.ExpressionEvaluator.Expressions;
+using Dahomey.ExpressionEvaluator.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -96,7 +96,7 @@ namespace Dahomey.ExpressionEvaluator
 
         private static Func<Dictionary<string, object>, double> GenerateFunctor2<TP1, TP2, T>(Delegate function, ListExpression argumentsExpr)
         {
-            Func<TP1, TP2, T> invoker = (Func< TP1, TP2, T>)function;
+            Func<TP1, TP2, T> invoker = (Func<TP1, TP2, T>)function;
             Func<T, double> converter = ReflectionHelper.GenerateConverter<T>();
             Func<Dictionary<string, object>, TP1> argGetter1 = argumentsExpr.GetItemGetter<TP1>(0);
             Func<Dictionary<string, object>, TP2> argGetter2 = argumentsExpr.GetItemGetter<TP2>(1);
