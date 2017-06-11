@@ -1,0 +1,11 @@
+# User-specific files
+*.suo
+*.user
+.vs
+_ReSharper*/
+*.csproj.ReSharper
+
+# Build output
+src/**/obj/
+src/**/bin/
+project.lock.json
