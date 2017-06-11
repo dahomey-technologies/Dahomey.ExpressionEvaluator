@@ -6,7 +6,7 @@
 
 #endregion
 
- using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -17,7 +17,7 @@ namespace Dahomey.ExpressionEvaluator
     {
         public static Func<T, TP> CreateDelegate<T, TP>(PropertyInfo propertyInfo)
         {
-            return (Func<T, TP>)Delegate.CreateDelegate(typeof(Func<T, TP>), propertyInfo.GetMethod);
+            return (Func<T, TP>)Delegate.CreateDelegate(typeof(Func<T, TP>), propertyInfo.GetGetMethod());
         }
 
         public static Func<TR> CreateDelegate<TR>(MethodInfo methodInfo, object target = null)

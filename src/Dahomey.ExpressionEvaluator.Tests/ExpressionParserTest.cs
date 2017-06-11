@@ -35,6 +35,18 @@ namespace Dahomey.ExpressionEvaluator.Tests
             Blue = 3
         }
 
+#if NET35
+        [Fact]
+        public void NumericExpressionTheory()
+        {
+            NumericExpressionTest("1+2*3", "1 2 3 * +", 7);
+            NumericExpressionTest("(1+2)*-3", "1 2 + 3 - *", (1 + 2) * -3);
+            NumericExpressionTest("(1+2)*(3+4)", "1 2 + 3 4 + *", (1 + 2) * (3 + 4));
+            NumericExpressionTest("1+2+3", "1 2 + 3 +", 1 + 2 + 3);
+            NumericExpressionTest("1+2", "1 2 +", 1 + 2);
+            NumericExpressionTest("1 + Color.Green)", "1 Color.Green +", 1 + (int)Color.Green);
+        }
+#else
         [Theory]
         [InlineData("1+2*3", "1 2 3 * +", 7)]
         [InlineData("(1+2)*-3", "1 2 + 3 - *", (1 + 2) * -3)]
@@ -42,6 +54,7 @@ namespace Dahomey.ExpressionEvaluator.Tests
         [InlineData("1+2+3", "1 2 + 3 +", 1 + 2 + 3)]
         [InlineData("1+2", "1 2 +", 1 + 2)]
         [InlineData("1 + Color.Green)", "1 Color.Green +", 1 + Color.Green)]
+#endif
         public void NumericExpressionTest(string expression, string expectedRpn, double expectedValue)
         {
             ExpressionParser parser = new ExpressionParser();
@@ -52,6 +65,20 @@ namespace Dahomey.ExpressionEvaluator.Tests
             Assert.Equal(expectedValue, expr.Evaluate());
         }
 
+#if NET35
+        [Fact]
+        public void BooleanExpressionTheory()
+        {
+            BooleanExpressionTest("(1+2) < (3+4)", "1 2 + 3 4 + <", true);
+            BooleanExpressionTest("(1+2) <= (3+4)", "1 2 + 3 4 + <=", true);
+            BooleanExpressionTest("(1+2) == (3+4)", "1 2 + 3 4 + ==", false);
+            BooleanExpressionTest("true", "true", true);
+            BooleanExpressionTest("false", "false", false);
+            BooleanExpressionTest("1 < 2 || 1 > 2", "1 2 < 1 2 > ||", true);
+            BooleanExpressionTest("1 < 2 && 1 > 2", "1 2 < 1 2 > &&", false);
+            BooleanExpressionTest("!(1 > 2)", "1 2 > !", true);
+        }
+#else
         [Theory]
         [InlineData("(1+2) < (3+4)", "1 2 + 3 4 + <", true)]
         [InlineData("(1+2) <= (3+4)", "1 2 + 3 4 + <=", true)]
@@ -61,6 +88,7 @@ namespace Dahomey.ExpressionEvaluator.Tests
         [InlineData("1 < 2 || 1 > 2", "1 2 < 1 2 > ||", true)]
         [InlineData("1 < 2 && 1 > 2", "1 2 < 1 2 > &&", false)]
         [InlineData("!(1 > 2)", "1 2 > !", true)]
+#endif
         public void BooleanExpressionTest(string expression, string expectedRpn, bool expectedValue)
         {
             IBooleanExpression expr = new ExpressionParser().ParseBooleanExpression(expression);
@@ -207,7 +235,7 @@ namespace Dahomey.ExpressionEvaluator.Tests
         public void EnumFuncParam()
         {
             ExpressionParser parser = new ExpressionParser();
-            parser.RegisterAssembly(GetType().GetTypeInfo().Assembly);
+            parser.RegisterAssembly(GetType().Assembly);
 
             Func<Color, Color> colorFunc = c => c;
             parser.RegisterFunction("color", colorFunc);
@@ -222,7 +250,7 @@ namespace Dahomey.ExpressionEvaluator.Tests
         public void AdvancedEnumTest()
         {
             ExpressionParser parser = new ExpressionParser();
-            parser.RegisterAssembly(GetType().GetTypeInfo().Assembly);
+            parser.RegisterAssembly(GetType().Assembly);
 
             List<Item> items = new List<Item>
             {
