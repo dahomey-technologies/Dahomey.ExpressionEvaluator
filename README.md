@@ -1,8 +1,17 @@
 # Dahomey.ExpressionEvaluator
 Evaluate C# Formulas at Runtime
 
+## Supported Platforms
+* .Net Standard 2.0 (Compatible with .Net Core 2.0 and .Net Framework 4.6.1)
+* .Net Framework 3.5 (Compatible with Unity)
+
+Dahomey.ExpressionEvaluator code does not trigger any AOT complilation. It means it can be used safely with Unity IL2CPP.
+
+## Building
+Supports Visual Studio 2017 only
+
 # Examples
-#### Parse a numeric expression
+## Parse a numeric expression
 ```csharp
 ExpressionParser parser = new ExpressionParser();
 parser.RegisterVariable<int>("a");
@@ -17,7 +26,7 @@ The result will be:
 3
 ```
 
-#### Parse a numeric expression with member access
+## Parse a numeric expression with member access
 ```csharp
 class A
 {
@@ -42,7 +51,7 @@ The result will be:
 13
 ```
 
-#### Parse a numeric expression with array or list access
+## Parse a numeric expression with array or list access
 ```csharp
 ExpressionParser parser = new ExpressionParser();
 parser.RegisterVariable<List<int>>("a");
@@ -57,7 +66,7 @@ The result will be:
 3
 ```
 
-#### Parse a numeric expression with function access
+## Parse a numeric expression with function access
 ```csharp
 Func<double, double> func = n => Math.Cos(n);
 ExpressionParser parser = new ExpressionParser();
