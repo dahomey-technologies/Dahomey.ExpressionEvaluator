@@ -2,6 +2,19 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <LangVersion>7.3</LangVersion>
+    <PackageReleaseNotes>cf. https://github.com/dahomey-technologies/Dahomey.ExpressionEvaluator/releases/tag/$(Version)</PackageReleaseNotes>
+    <Authors>Michaël Catanzariti</Authors>
+    <Company>Dahomey Technologies</Company>
+    <Description>Evaluate C# Formulas at Runtime</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/dahomey-technologies/Dahomey.ExpressionEvaluator</PackageProjectUrl>
+    <PackageTags>expression;parser;formula</PackageTags>
+    <RepositoryUrl>https://github.com/dahomey-technologies/Dahomey.ExpressionEvaluator.git</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageIconUrl>https://avatars3.githubusercontent.com/u/29336625?s=200&amp;v=4</PackageIconUrl>
+    <Copyright>Copyright © Dahomey Technologies 2019</Copyright>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
 </Project>
