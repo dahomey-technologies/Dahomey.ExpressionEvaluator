@@ -2,13 +2,22 @@
 Evaluate C# Formulas at Runtime
 
 ## Supported Platforms
-* .Net Standard 2.0 (Compatible with .Net Core 2.0 and .Net Framework 4.6.1)
-* .Net Framework 3.5 (Compatible with Unity)
+* .Net Standard 2.0. Compatible with 
+  * .Net Core 2.0+
+  * .Net Framework 4.6.1+
+  * Unity 2018.1+
 
 Dahomey.ExpressionEvaluator code does not trigger any AOT complilation. It means it can be used safely with Unity IL2CPP.
 
-## Building
-Supports Visual Studio 2017 only
+## Installation
+### NuGet
+https://www.nuget.org/packages/Dahomey.ExpressionEvaluator/
+
+`Install-Package Dahomey.ExpressionEvaluator`
+
+### Compilation from source
+  1. `dotnet restore`
+  2. `dotnet pack -c Release`
 
 ## Examples
 ### Parse a numeric expression
