@@ -32,6 +32,12 @@ namespace Dahomey.ExpressionEvaluator
         Mult,
         Div,
         Mod,
+        Pow,
+        Cos,
+        Sin,
+        Tan,
+        Abs,
+        Sqrt,
         BitwiseAnd,
         BitwiseOr,
         BitwiseXor,
@@ -63,7 +69,7 @@ namespace Dahomey.ExpressionEvaluator
 
         public ExpressionLexer(string expression)
         {
-            this.expression = expression;
+            this.expression = expression.Replace("Pi", $"{Math.PI}").Replace("Pow","").Replace(',','^');
             Advance();
             NextToken();
         }
@@ -242,7 +248,31 @@ namespace Dahomey.ExpressionEvaluator
                 case "false":
                     currentTokenType = TokenType.False;
                     break;
-
+                
+                case "Sin":
+                currentTokenType = TokenType.Sin;
+                break;
+                
+                case "Cos":
+                currentTokenType = TokenType.Cos;
+                break;
+                
+                case "Tan":
+                currentTokenType = TokenType.Tan;
+                break;
+                
+                case "Abs":
+                currentTokenType = TokenType.Abs;
+                break;
+                
+                case "Sqrt":
+                currentTokenType = TokenType.Sqrt;
+                break;
+                
+                case "Pow":
+                currentTokenType = TokenType.Pow;
+                break;
+                
                 default:
                     currentTokenType = TokenType.Identifier;
                     break;
@@ -322,7 +352,15 @@ namespace Dahomey.ExpressionEvaluator
 
                 case '^':
                     Advance();
-                    currentTokenType = TokenType.BitwiseXor;
+                    if (currentChar == '^')
+                    {
+                        Advance();
+                        currentTokenType = TokenType.BitwiseXor;
+                    }
+                    else
+                    {
+                        currentTokenType = TokenType.Pow;
+                    }
                     break;
 
                 case '~':

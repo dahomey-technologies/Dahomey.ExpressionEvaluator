@@ -9,3 +9,4 @@ _ReSharper*/
 src/**/obj/
 src/**/bin/
 project.lock.json
+*.meta
