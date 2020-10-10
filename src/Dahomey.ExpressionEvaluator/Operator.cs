@@ -15,8 +15,14 @@ namespace Dahomey.ExpressionEvaluator
         Mult, // *
         Div, // /
         Mod, // %
+        Pow, // ^
         Minus, // -
         Plus, // +
+        Cos, // Cos
+        Sin, // Sin
+        Tan, // Tan
+        Abs, // Abs
+        Sqrt, // Sqrt
         LeftShift, // <<
         RightShift, // >>
         LessThan, // <
@@ -26,7 +32,7 @@ namespace Dahomey.ExpressionEvaluator
         Equal, // ==
         NotEqual, // !=
         BitwiseAnd, // &
-        BitwiseXor, // ^
+        BitwiseXor, // ^^
         BitwiseOr, // |
         BitwiseComplement, // ~
         Not, // !
@@ -34,7 +40,7 @@ namespace Dahomey.ExpressionEvaluator
         Or, // ||
     }
 
-    internal static class OperatorExtension
+    public static class OperatorExtension
     {
         public static string PrettyPrint(this Operator op)
         {
@@ -51,10 +57,28 @@ namespace Dahomey.ExpressionEvaluator
 
                 case Operator.Minus:
                     return "-";
+                
+                case Operator.Pow:
+                    return "^";
 
                 case Operator.Plus:
                     return "+";
-
+                
+                case Operator.Sin:
+                    return "Sin";
+                
+                case Operator.Cos:
+                    return "Cos";
+                
+                case Operator.Abs:
+                    return "Abs";
+                
+                case Operator.Tan:
+                    return "Tan";
+                
+                case Operator.Sqrt:
+                    return "Sqrt";
+                
                 case Operator.LeftShift:
                     return "<<";
 
@@ -86,7 +110,7 @@ namespace Dahomey.ExpressionEvaluator
                     return "|";
 
                 case Operator.BitwiseXor:
-                    return "^";
+                    return "^^";
 
                 case Operator.BitwiseComplement:
                     return "~";

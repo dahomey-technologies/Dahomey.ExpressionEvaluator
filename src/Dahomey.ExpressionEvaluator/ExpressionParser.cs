@@ -303,6 +303,10 @@ namespace Dahomey.ExpressionEvaluator
                 else if (lexer.Accept(TokenType.Mod))
                 {
                     op = Operator.Mod;
+                } 
+                else if(lexer.Accept(TokenType.Pow))
+                { 
+                    op = Operator.Pow;
                 }
                 else
                 {
@@ -327,6 +331,46 @@ namespace Dahomey.ExpressionEvaluator
                 return new NumericArithmeticExpression
                 {
                     Operator = Operator.Minus,
+                    LeftExpr = (INumericExpression)PrimaryExpression()
+                };
+            }
+            else if (lexer.Accept(TokenType.Cos))
+            {
+                return new NumericArithmeticExpression
+                {
+                    Operator = Operator.Cos,
+                    LeftExpr = (INumericExpression)PrimaryExpression()
+                };
+            }
+            else if (lexer.Accept(TokenType.Sin))
+            {
+                return new NumericArithmeticExpression
+                {
+                    Operator = Operator.Sin,
+                    LeftExpr = (INumericExpression)PrimaryExpression()
+                };
+            }
+            else if (lexer.Accept(TokenType.Tan))
+            {
+                return new NumericArithmeticExpression
+                {
+                    Operator = Operator.Tan,
+                    LeftExpr = (INumericExpression)PrimaryExpression()
+                };
+            }
+            else if (lexer.Accept(TokenType.Abs))
+            {
+                return new NumericArithmeticExpression
+                {
+                    Operator = Operator.Abs,
+                    LeftExpr = (INumericExpression)PrimaryExpression()
+                };
+            } 
+            else if (lexer.Accept(TokenType.Sqrt))
+            {
+                return new NumericArithmeticExpression
+                {
+                    Operator = Operator.Sin,
                     LeftExpr = (INumericExpression)PrimaryExpression()
                 };
             }
@@ -362,7 +406,6 @@ namespace Dahomey.ExpressionEvaluator
             {
                 return VariableExpression();
             }
-
             return Literal();
         }
 
@@ -413,63 +456,58 @@ namespace Dahomey.ExpressionEvaluator
         private IExpression VariableOrFunctionExpression()
         {
             string identifier = lexer.Identifier();
-
-            // function
-            if (lexer.Peek(TokenType.OpenParenthesis))
+            Type identifierType;
+            // variable
+            if (variableTypes.TryGetValue(identifier, out identifierType))
             {
-                ListExpression argsExpr = (ListExpression)InvocationExpression();
-
-                Delegate function;
-
-                if (!functions.TryGetValue(identifier, out function))
+                if (ReflectionHelper.IsNumber(identifierType))
                 {
-                    throw BuildException("Unknown function '{0}()'", identifier);
-                }
-
-                MethodInfo methodInfo = function.Method;
-
-                if (ReflectionHelper.IsNumber(methodInfo.ReturnType))
-                {
-                    return new NumericFuncExpression(identifier, function, argsExpr);
+                    return new NumericVariableExpression(identifier, identifierType);
                 }
                 else
                 {
-                    return new ObjectFuncExpression(identifier, function, argsExpr);
+                    return new ObjectVariableExpression(identifier, identifierType);
                 }
             }
-            // variable or enum
             else
             {
-                Type identifierType;
-                // variable
-                if (variableTypes.TryGetValue(identifier, out identifierType))
+                identifierType = ReflectionHelper.GetType(assemblies, identifier);
+                // enum
+
+                if (identifier != null && identifierType.IsEnum)
                 {
-                    if (ReflectionHelper.IsNumber(identifierType))
-                    {
-                        return new NumericVariableExpression(identifier, identifierType);
-                    }
-                    else
-                    {
-                        return new ObjectVariableExpression(identifier, identifierType);
-                    }
+                    lexer.Expect(TokenType.Dot);
+                    string enumValue = lexer.Identifier();
+
+                    Enum value = (Enum) Enum.Parse(identifierType, enumValue);
+                    return new EnumLiteralExpression(value);
                 }
                 else
-                {
-                    identifierType = ReflectionHelper.GetType(assemblies, identifier);
-                    // enum
-
-                    if (identifier != null && identifierType.IsEnum)
+                { 
+                    // function
+                    if (lexer.Peek(TokenType.OpenParenthesis))
                     {
-                        lexer.Expect(TokenType.Dot);
-                        string enumValue = lexer.Identifier();
+                        ListExpression argsExpr = (ListExpression) InvocationExpression();
 
-                        Enum value = (Enum)Enum.Parse(identifierType, enumValue);
-                        return new EnumLiteralExpression(value);
+                        Delegate function;
+
+                        if (!functions.TryGetValue(identifier, out function))
+                        {
+                            throw BuildException("Unknown function '{0}()'", identifier);
+                        }
+
+                        MethodInfo methodInfo = function.Method;
+
+                        if (ReflectionHelper.IsNumber(methodInfo.ReturnType))
+                        {
+                            return new NumericFuncExpression(identifier, function, argsExpr);
+                        }
+                        else
+                        {
+                            return new ObjectFuncExpression(identifier, function, argsExpr);
+                        }
                     }
-                    else
-                    {
-                        throw BuildException(string.Format("Unknown variable '{0}'", identifier));
-                    }
+                    throw BuildException(string.Format("Unknown variable '{0}'", identifier));
                 }
             }
         }

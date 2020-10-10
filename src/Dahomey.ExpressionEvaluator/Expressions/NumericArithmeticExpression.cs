@@ -23,14 +23,14 @@ namespace Dahomey.ExpressionEvaluator
             switch (Operator)
             {
                 case Operator.Plus:
-                    return RightExpr == null ?
-                        LeftExpr.Evaluate(variables) :
-                        LeftExpr.Evaluate(variables) + RightExpr.Evaluate(variables);
+                    return RightExpr == null
+                        ? LeftExpr.Evaluate(variables)
+                        : LeftExpr.Evaluate(variables) + RightExpr.Evaluate(variables);
 
                 case Operator.Minus:
-                    return RightExpr == null ?
-                        -LeftExpr.Evaluate(variables) :
-                        LeftExpr.Evaluate(variables) - RightExpr.Evaluate(variables);
+                    return RightExpr == null
+                        ? -LeftExpr.Evaluate(variables)
+                        : LeftExpr.Evaluate(variables) - RightExpr.Evaluate(variables);
 
                 case Operator.Mult:
                     return LeftExpr.Evaluate(variables) * RightExpr.Evaluate(variables);
@@ -41,23 +41,41 @@ namespace Dahomey.ExpressionEvaluator
                 case Operator.Mod:
                     return LeftExpr.Evaluate(variables) % RightExpr.Evaluate(variables);
 
+                case Operator.Pow:
+                    return Math.Pow(LeftExpr.Evaluate(variables), RightExpr.Evaluate(variables));
+                
+                case Operator.Sin:
+                    return Math.Sin(LeftExpr.Evaluate(variables));
+                
+                case Operator.Cos:
+                    return Math.Cos(LeftExpr.Evaluate(variables));
+                
+                case Operator.Tan:
+                    return Math.Tan(LeftExpr.Evaluate(variables));
+                
+                case Operator.Abs:
+                    return Math.Abs(LeftExpr.Evaluate(variables));
+                
+                case Operator.Sqrt:
+                    return Math.Sqrt(LeftExpr.Evaluate(variables));
+                
                 case Operator.BitwiseAnd:
-                    return (int)LeftExpr.Evaluate(variables) & (int)RightExpr.Evaluate(variables);
+                    return (int) LeftExpr.Evaluate(variables) & (int) RightExpr.Evaluate(variables);
 
                 case Operator.BitwiseOr:
-                    return (int)LeftExpr.Evaluate(variables) | (int)RightExpr.Evaluate(variables);
+                    return (int) LeftExpr.Evaluate(variables) | (int) RightExpr.Evaluate(variables);
 
                 case Operator.BitwiseXor:
-                    return (int)LeftExpr.Evaluate(variables) ^ (int)RightExpr.Evaluate(variables);
+                    return (int) LeftExpr.Evaluate(variables) ^ (int) RightExpr.Evaluate(variables);
 
                 case Operator.BitwiseComplement:
-                    return ~(int)LeftExpr.Evaluate(variables);
+                    return ~(int) LeftExpr.Evaluate(variables);
 
                 case Operator.LeftShift:
-                    return (int)LeftExpr.Evaluate(variables) << (int)RightExpr.Evaluate(variables);
+                    return (int) LeftExpr.Evaluate(variables) << (int) RightExpr.Evaluate(variables);
 
                 case Operator.RightShift:
-                    return (int)LeftExpr.Evaluate(variables) >> (int)RightExpr.Evaluate(variables);
+                    return (int) LeftExpr.Evaluate(variables) >> (int) RightExpr.Evaluate(variables);
 
                 default:
                     throw new NotSupportedException(string.Format("operator {0} not support", Operator));
